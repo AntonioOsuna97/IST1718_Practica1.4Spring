@@ -14,4 +14,6 @@ public interface DAOUsuariosInterfaz {
 	public DTOUsuarios buscaUsuario(String id);
 	
 	public boolean buscaUsuario(String nombre, String email, String dni);
+	
+	public DTOUsuarios buscaUsuario(String nombre, String contraseña);
 }

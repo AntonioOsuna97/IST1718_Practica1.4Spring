@@ -27,7 +27,7 @@ public class DAOUsuarios implements DAOUsuariosInterfaz {
 		}
 		
 		public DTOUsuarios buscaAdmin(String nombre, String contraseña){ //Devuelve el usuario buscado o null si no existe
-			if(nombre.equals("Admin")) {
+			if(nombre.equals("Admin") && contraseña.equals("12345")) {
 			String sql = "select * from usuarios where Nombre = ? AND Password = ?";
 			Object[ ] parametros = {nombre, contraseña}; //Array de objetos
 			UsuarioMapper mapper = new UsuarioMapper();
@@ -50,6 +50,14 @@ public class DAOUsuarios implements DAOUsuariosInterfaz {
 			}
 		
 		
+		public DTOUsuarios buscaUsuario(String nombre, String contraseña){ //Devuelve el usuario buscado o null si no existe
+			String sql = "select * from usuarios where Nombre = ? AND Password = ?";
+			Object[ ] parametros = {nombre,contraseña}; //Array de objetos
+			UsuarioMapper mapper = new UsuarioMapper();
+			List<DTOUsuarios> usuarios = this.jdbcTemplate.query(sql, parametros, mapper);
+			if (usuarios.isEmpty()) return null;
+			else return usuarios.get(0);
+			}
 		
 		public boolean buscaUsuario(String nombre, String email, String dni){ 
 			String sql = "SELECT * FROM usuarios WHERE Nombre= ? AND Email = ? AND DNI = ?";

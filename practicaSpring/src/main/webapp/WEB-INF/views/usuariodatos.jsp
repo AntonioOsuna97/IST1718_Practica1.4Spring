@@ -12,10 +12,10 @@
 <h3>Estos son sus datos: </h3>
 
  
-<p>Su nombre es:  ${nombre}</p>
-<p>Su apellido es:  ${password}</p>
-<p>Su email es: ${email}</p>
-<p>Su dni es: ${dni}</p>
+<p>Su nombre es:  ${dto.nombre}</p>
+<p>Su apellido es:  ${dto.password}</p>
+<p>Su email es: ${dto.email}</p>
+<p>Su dni es: ${dto.dni}</p>
 
 </body>
 </html>

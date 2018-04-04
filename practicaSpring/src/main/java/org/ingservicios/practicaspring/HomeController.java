@@ -41,28 +41,40 @@ public class HomeController {
 		//url a asignar dependiendo de si es administrador o no.
 		String url="";
 		List <DTOUsuarios> lista = dao.leeUsuarios();
-		int posicion=0;
+		//int posicion=0;
 		
-		for(posicion=0;posicion<lista.size();posicion++) {
-			if(lista.get(posicion).getNombre().equals(usuario) && usuario.equals("Admin")
-					&& lista.get(posicion).getPassword().equals(pass)) {
+		//for(posicion=0;posicion<lista.size();posicion++) {
+			//if(lista.get(posicion).getNombre().equals(usuario) && usuario.equals("Admin")
+				//	&& lista.get(posicion).getPassword().equals(pass)) {
+		if(dao.buscaAdmin(usuario, pass)!=null) {
 				//En Spring se utiliza model.addAttribute en vez de req.setAttribute para 
 				//agregar el atributo proporcionado bajo el nombre proporcionado.
-				model.addAttribute("nombre", lista.get(posicion).getNombre());
+			/*	
+			model.addAttribute("nombre", lista.get(posicion).getNombre());
 				model.addAttribute("password", lista.get(posicion).getPassword());
 				model.addAttribute("email", lista.get(posicion).getEmail());
 				model.addAttribute("dni", lista.get(posicion).getDni());
+				*/
 				url="usuario";
-			}else if(lista.get(posicion).getNombre().equals(usuario) && !usuario.equals("Admin")
-			&& lista.get(posicion).getPassword().equals(pass))  {
+	//		}else if(lista.get(posicion).getNombre().equals(usuario) && !usuario.equals("Admin")
+	//		&& lista.get(posicion).getPassword().equals(pass))  {
+				
+		}else if(dao.buscaUsuario(usuario, pass)!=null){
+				DTOUsuarios dto = new DTOUsuarios();
+				dto=dao.buscaUsuario(usuario, pass);
+				model.addAttribute("dto", dto);
+				
+				
+				
+				/*
 				model.addAttribute("nombre", lista.get(posicion).getNombre());
 				model.addAttribute("password", lista.get(posicion).getPassword());
 				model.addAttribute("email", lista.get(posicion).getEmail());
-				model.addAttribute("dni", lista.get(posicion).getDni());
+				model.addAttribute("dni", lista.get(posicion).getDni()); 
+				*/
 				url="usuariodatos";
 			}
 			
-		}
 		
 		
 		//Significa que el usuario no existe
@@ -104,13 +116,15 @@ public class HomeController {
 				//for(int pos=0;pos<lista.size();pos++) {
 					//if(lista.get(pos).getDni().equals(dni) && lista.get(pos).getEmail().equals(email) && 
 						//	lista.get(pos).getNombre().equals(usuario)) {
-				if(dao.buscaUsuario(usuario, email, dni)==true) {
-						url="usuarioYaRegistrado";
+				
+				if(dao.buscaUsuario(usuario, email, dni)==true) {//Busca usuario a través de correo,user,dni
+						
+					    url="usuarioYaRegistrado";
 						variable=true;
 				}
 					//}
 				//}
-				if(variable==false) {
+				if(variable==false) { 
 					boolean variable2=false;
 					//for(int pos=0;pos<lista.size();pos++) {
 						if(dao.buscaUsuario(dni)!=null) {
